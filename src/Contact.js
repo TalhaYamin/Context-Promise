@@ -6,11 +6,12 @@ const Contact = ({ routeHome }) => {
 
   return (
     <div>
-      <h1> This is {params.id} </h1>
-      <h1> This is {params.name}</h1>
+      <h1> This is my {params.id} </h1>
+      <h1> This is my{params.name}</h1>
       {/* <h1>name{id.name}</h1> */}
     </div>
   );
 };
 
 export default Contact;
+
