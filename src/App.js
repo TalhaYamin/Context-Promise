@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Home";
+import Contact from "./Contact";
+import { createContext, useEffect, useState } from "react";
+ 
+const BigData = createContext();
 
 function App() {
+  const [filteredData, setfilteredData] = useState()
+
+
+  const API = "https://jsonplaceholder.typicode.com/users"
+
+  const FetchData = async (url)=> {
+    try{
+      const res = await fetch(url)
+      const data = await res.json()
+      setfilteredData(data)
+    } catch (error){
+      console.log(error)
+    }
+  }
+  console.log("filteredData", filteredData)
+
+  useEffect (()=>{
+    FetchData(API)
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BigData.Provider value={filteredData}>
+      <h1>This is my App</h1>
+      
+      <Routes>
+        <Route path="/" element={<Home  />} />
+        <Route path="/contact/:id?/:name?" element={<Contact />} />
+      </Routes>
+      </BigData.Provider>
     </div>
   );
 }
 
 export default App;
+export { BigData };
